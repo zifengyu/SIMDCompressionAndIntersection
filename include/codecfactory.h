@@ -10,6 +10,12 @@
 
 #define NOSIMD_CODEC
 
+#include "binarypacking.h"
+#include "bitpackinghelpers.h"
+#include "codecfactory.h"
+#include "compositecodec.h"
+#include "delta.h"
+#include "util.h"
 #include "variablebyte.h"
 
 namespace SIMDCompressionLib
