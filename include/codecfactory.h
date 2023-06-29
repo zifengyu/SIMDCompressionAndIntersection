@@ -8,6 +8,8 @@
 #ifndef SIMDCompressionAndIntersection_CODECFACTORY_H_
 #define SIMDCompressionAndIntersection_CODECFACTORY_H_
 
+#define NOSIMD_CODEC
+
 #include "variablebyte.h"
 
 namespace SIMDCompressionLib
