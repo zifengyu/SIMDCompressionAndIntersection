@@ -39,16 +39,6 @@ inline uint32_t gccbits(const uint32_t v) {
   return v == 0 ? 0 : 32 - __builtin_clz(v);
 }
 
-/**
- * Treats  __m128i as 4 x 32-bit integers and asks for the max
- * number of bits used (integer logarithm).
- */
-inline uint32_t maxbitas32int(const __m128i accumulator) {
-  SIMDCOMP_ALIGNED(16) uint32_t tmparray[4];
-  MM_STORE_SI_128(reinterpret_cast<__m128i *>(tmparray), accumulator);
-  return gccbits(tmparray[0] | tmparray[1] | tmparray[2] | tmparray[3]);
-}
-
 static CONST_FUNCTION bool divisibleby(size_t a, uint32_t x) {
   return (a % x == 0);
 }
@@ -92,22 +82,6 @@ template <class T> CONST_FUNCTION const T *padTo32bits(const T *inbyte) {
   return reinterpret_cast<const T *>((reinterpret_cast<uintptr_t>(inbyte) + 3) &
                                      ~3);
 }
-
-#ifndef _MSC_VER
-CONST_FUNCTION
-inline uint32_t asmbits(const uint32_t v) {
-  if (v == 0)
-    return 0;
-  uint32_t answer;
-  __asm__("bsr %1, %0;" : "=r"(answer) : "r"(v));
-  return answer + 1;
-}
-#else
-inline uint32_t asmbits(const uint32_t v) {
-  unsigned long index;
-  return (v == 0 || _BitScanReverse(&index, v) == 0) ? 0 : (index + 1);
-}
-#endif
 
 template <class iterator>
 bool is_strictlysorted(iterator first, iterator last) {

@@ -16,7 +16,7 @@
 namespace SIMDCompressionLib {
 
 struct BitPackingHelpers {
-  const static unsigned BlockSize = 32;
+  const static unsigned BlockSize = 128;
 
   static void inline fastunpack(const uint32_t *__restrict__ in,
                                 uint32_t *__restrict__ out,
